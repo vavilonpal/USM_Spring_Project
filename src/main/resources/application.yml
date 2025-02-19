@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: spring-laboratory-work
+  # DB properties
+  datasource:
+    username: user
+    password: user
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+
+  #JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  #FlyWay properties
+  flyway:
+    enabled: true
+
+# Logging level
+logging:
+  level:
+    org.springframework.data.org.springframework.data.jpa: debug
+    org.flywaydb: DEBUG
