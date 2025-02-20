@@ -17,6 +17,7 @@ spring:
   #FlyWay properties
   flyway:
     enabled: true
+    baseline-on-migrate: true
 
 # Logging level
 logging:

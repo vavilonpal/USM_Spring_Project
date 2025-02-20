@@ -8,14 +8,13 @@ import org.moodle.springlaboratorywork.dtos.MatchDTO;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Match;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.CoachRepository;
+import org.moodle.springlaboratorywork.exception.HomeAndAwayTeamAreTheSameException;
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.MatchRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +34,9 @@ public class MatchService {
     }
 
     public Match createMatch(MatchDTO matchDto) {
-        if (matchRepository.countByHomeTeamAndAwayTeam(matchDto.getHomeTeamName(), matchDto.getAwayTeamName()) != 0) {
-            throw new EntityExistsException("Match already exists");
-        }
+        checkTheSameOfTeamNames(matchDto.getHomeTeamName(), matchDto.getAwayTeamName());
+        checkExistsByHomeTeamNameAndAwayTeamName(matchDto.getHomeTeamName(), matchDto.getAwayTeamName());
+
         Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
                 .orElseThrow(() -> new EntityNotFoundException("Home team not exists"));
 
@@ -58,20 +57,30 @@ public class MatchService {
     }
 
     public Match updateMatch(Long id, MatchDTO matchDto) {
+        checkTheSameOfTeamNames(matchDto.getHomeTeamName(), matchDto.getAwayTeamName());
+
         Match match = getMatchById(id);
 
-        Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
-                .orElseThrow(() -> new EntityNotFoundException("Home team not exists"));
+        if (!(matchDto.getAwayTeamName().equals(match.getAwayTeam().getName())) ||
+                !(matchDto.getHomeTeamName().equals(match.getHomeTeam().getName()))){
+            checkExistsByHomeTeamNameAndAwayTeamName(matchDto.getHomeTeamName(), matchDto.getAwayTeamName());
 
-        Team awayTeam = teamRepository.findByName(matchDto.getAwayTeamName())
-                .orElseThrow(() -> new EntityNotFoundException("Away team not exists"));
+            Team homeTeam = teamRepository.findByName(matchDto.getHomeTeamName())
+                    .orElseThrow(() -> new EntityNotFoundException("Home team not exists"));
 
+            Team awayTeam = teamRepository.findByName(matchDto.getAwayTeamName())
+                    .orElseThrow(() -> new EntityNotFoundException("Away team not exists"));
+
+            match.setHomeTeam(homeTeam);
+            match.setAwayTeam(awayTeam);
+        }
+
+
+        //todo Do ask teams must be from the same league?
         League league = leagueRepository.findByName(matchDto.getLeagueName())
                 .orElseThrow(() -> new EntityNotFoundException("League not exists"));
 
         match.setLeague(league);
-        match.setHomeTeam(homeTeam);
-        match.setAwayTeam(awayTeam);
         match.setMatchDateTime(match.getMatchDateTime());
 
         return matchRepository.save(match);
@@ -81,4 +90,16 @@ public class MatchService {
         Match match = getMatchById(id);
         matchRepository.delete(match);
     }
+
+    private void checkTheSameOfTeamNames(String homeTeamName, String awayTeamName){
+        if (homeTeamName.equals(awayTeamName)){
+            throw new HomeAndAwayTeamAreTheSameException("Teams has same names");
+        }
+    }
+    private void checkExistsByHomeTeamNameAndAwayTeamName(String homeTeamName, String awayTeamName){
+        if (matchRepository.existsByHomeTeamNameAndAwayTeamName(homeTeamName, awayTeamName)) {
+            throw new EntityExistsException("Match already exists");
+        }
+    }
+
 }

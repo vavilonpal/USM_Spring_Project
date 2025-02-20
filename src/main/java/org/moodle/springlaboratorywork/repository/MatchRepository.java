@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
-    @Query("SELECT COUNT(m) FROM Match m " +
+   /* @Query("SELECT COUNT(m) FROM Match m " +
             "WHERE m.homeTeam.name = :homeTeamName " +
             "AND m.awayTeam.name = :awayTeamName")
     Long countByHomeTeamAndAwayTeam(@Param("homeTeamName") String homeTeamName,
                                     @Param("awayTeamName") String awayTeamName);
+    */
+    Boolean existsByHomeTeamNameAndAwayTeamName(String homeTeamName, String awayTeamName);
 }

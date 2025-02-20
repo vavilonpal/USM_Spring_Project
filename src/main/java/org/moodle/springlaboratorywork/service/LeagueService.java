@@ -12,6 +12,8 @@ import org.moodle.springlaboratorywork.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,16 +44,20 @@ public class LeagueService {
     public League updateLeague(Long id, LeagueDTO leagueDTO) {
         League league = getLeagueById(id);
 
+        league.setName(leagueDTO.getName());
+
         if (!(leagueDTO.getTeamNames().isEmpty())) {
 
-            leagueDTO.getTeamNames().stream()
-                    .map(teamRepository::findByName)
-                    .map(teamOptional -> teamOptional
-                            .orElseThrow(() -> new EntityNotFoundException("Team not found")))
-                    .map(team -> league.getTeams().add(team));
+            Set<Team> leagueTeams =  leagueDTO.getTeamNames().stream()
+                    .map(name -> {
+                        Team team = teamRepository.findByName(name)
+                                .orElseThrow(()-> new EntityNotFoundException("Team not found"));
+                        team.setLeague(league);
+                        return team;
+                    }).collect(Collectors.toSet());
 
+            league.setTeams(leagueTeams);
         }
-        league.setName(leagueDTO.getName());
 
         return leagueRepository.save(league);
     }
