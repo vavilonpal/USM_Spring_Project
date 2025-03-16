@@ -9,6 +9,7 @@ import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.hibernateRepository.LeagueDao;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,29 +22,29 @@ import java.util.stream.Collectors;
 public class LeagueService {
     private final LeagueRepository leagueRepository;
     private final TeamRepository teamRepository;
+    private final LeagueDao leagueDao;
 
     public List<League> getAllLeagues() {
-        return leagueRepository.findAll();
+        return leagueDao.findAll();
     }
 
     public League getLeagueById(Long id) {
-        return leagueRepository.findById(id)
+        return leagueDao.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("League by id:" + id + " not found"));
     }
 
     public League createLeague(LeagueDTO leagueDTO) {
-        if (leagueRepository.existsByName(leagueDTO.getName())) {
+        if (leagueDao.existsByName(leagueDTO.getName())) {
             throw new EntityExistsException("League by name:" + leagueDTO.getName() + "already exists");
         }
         League league = League.builder()
                 .name(leagueDTO.getName())
                 .build();
-        return leagueRepository.save(league);
+        return leagueDao.save(league);
     }
 
     public League updateLeague(Long id, LeagueDTO leagueDTO) {
         League league = getLeagueById(id);
-
         league.setName(leagueDTO.getName());
 
         if (!(leagueDTO.getTeamNames().isEmpty())) {
@@ -59,11 +60,11 @@ public class LeagueService {
             league.setTeams(leagueTeams);
         }
 
-        return leagueRepository.save(league);
+        return leagueDao.update(league);
     }
 
     public void deleteLeague(Long id) {
         League league = getLeagueById(id);
-        leagueRepository.delete(league);
+        leagueDao.delete(league);
     }
 }

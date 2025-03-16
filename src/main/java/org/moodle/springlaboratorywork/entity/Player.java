@@ -3,6 +3,7 @@ package org.moodle.springlaboratorywork.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.moodle.springlaboratorywork.entity.embedded.PlayerStatistic;
 
 import java.time.LocalDateTime;
 
@@ -26,6 +27,14 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
+
+
+    @Embedded
+    @AttributeOverrides(value = {
+            @AttributeOverride(name = "goals", column = @Column(name = "goals")),
+            @AttributeOverride(name = "assists", column = @Column(name = "assists"))
+    })
+    private PlayerStatistic playerStatistic;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

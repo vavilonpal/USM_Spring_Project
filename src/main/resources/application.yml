@@ -9,10 +9,10 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   #JPA properties
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: true
 
   #FlyWay properties
   flyway:

@@ -41,18 +41,17 @@ VALUES ('John', 'Doe', 1, NOW(), NOW()),
 UPDATE teams
 SET coach_id = id;
 
--- Добавление данных в таблицу players
-INSERT INTO players (name, surname, team_id, created_at, updated_at)
-VALUES ('Player1', 'One', 1, NOW(), NOW()),
-       ('Player2', 'Two', 2, NOW(), NOW()),
-       ('Player3', 'Three', 3, NOW(), NOW()),
-       ('Player4', 'Four', 4, NOW(), NOW()),
-       ('Player5', 'Five', 5, NOW(), NOW()),
-       ('Player6', 'Six', 6, NOW(), NOW()),
-       ('Player7', 'Seven', 7, NOW(), NOW()),
-       ('Player8', 'Eight', 8, NOW(), NOW()),
-       ('Player9', 'Nine', 9, NOW(), NOW()),
-       ('Player10', 'Ten', 10, NOW(), NOW());
+INSERT INTO players (name, surname, team_id, assists, goals, created_at, updated_at)
+VALUES ('Player1', 'One', 1, 5, 3, NOW(), NOW()),
+       ('Player2', 'Two', 2, 7, 4, NOW(), NOW()),
+       ('Player3', 'Three', 3, 2, 1, NOW(), NOW()),
+       ('Player4', 'Four', 4, 6, 2, NOW(), NOW()),
+       ('Player5', 'Five', 5, 3, 5, NOW(), NOW()),
+       ('Player6', 'Six', 6, 4, 6, NOW(), NOW()),
+       ('Player7', 'Seven', 7, 1, 2, NOW(), NOW()),
+       ('Player8', 'Eight', 8, 8, 7, NOW(), NOW()),
+       ('Player9', 'Nine', 9, 9, 8, NOW(), NOW()),
+       ('Player10', 'Ten', 10, 0, 1, NOW(), NOW());
 
 -- Добавление данных в таблицу matches
 INSERT INTO matches (league_id, home_team_id, away_team_id, match_datetime, created_at, updated_at)

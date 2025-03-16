@@ -19,7 +19,9 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<TeamDTO>> getAllTeams() {
-        List<TeamDTO> teamDTOList = teamService.getAllTeams().stream().map(TeamDTO::mapToDTO).toList();
+        List<TeamDTO> teamDTOList = teamService.getAllTeams().stream()
+                .map(TeamDTO::mapToDTO)
+                .toList();
         return ResponseEntity.ok(teamDTOList);
     }
 

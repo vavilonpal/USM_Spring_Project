@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface LeagueRepository extends JpaRepository<League, Long> {
     Boolean existsByName(String name);
-
     Optional<League> findByName(String name);
 }

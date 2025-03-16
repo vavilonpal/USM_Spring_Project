@@ -32,11 +32,16 @@ public class Team {
     @Builder.Default
     private List<Player> players = new ArrayList<>();
 
-    /*@OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "team_id")
+    @OneToMany
+    @JoinColumn(name = "home_team_id")
     @Builder.Default
-    private List<Match> matches = new ArrayList<>();
-*/
+    private List<Match> homeMatches = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "away_team_id")
+    @Builder.Default
+    private List<Match> awayMatches = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "league_id")
     private League league;
@@ -47,11 +52,6 @@ public class Team {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
-
-    public void setPlayer(Player player){
-        this.players.add(player);
-    }
     @PrePersist
     void prePersist(){
         this.createdAt = LocalDateTime.now();

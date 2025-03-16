@@ -21,6 +21,8 @@ public class TeamDTO {
     private String leagueName;
     @Builder.Default
     private List<String> playerNames = new ArrayList<>();
+    private List<MatchDTO> homeMatches = new ArrayList<>();
+    private List<MatchDTO> awayMatches = new ArrayList<>();
 
 
     public static TeamDTO mapToDTO(Team team){
@@ -33,6 +35,16 @@ public class TeamDTO {
                         .stream()
                         .map(Player::getName)
                         .toList())
+                .homeMatches(team.getHomeMatches()
+                        .stream()
+                        .map(MatchDTO::mapToDTO)
+                        .toList()
+                )
+                .awayMatches(team.getHomeMatches()
+                        .stream()
+                        .map(MatchDTO::mapToDTO)
+                        .toList()
+                )
                 .build();
     }
 

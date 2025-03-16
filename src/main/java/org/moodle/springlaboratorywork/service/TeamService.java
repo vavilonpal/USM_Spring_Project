@@ -49,12 +49,12 @@ public class TeamService {
         Team team = getTeamById(id);
         Coach coach;
         League league;
-        if(!(teamDTO.getCoachName() == null)){
+        if(teamDTO.getCoachName() != null){
             coach = coachRepository.findByName(teamDTO.getCoachName())
                     .orElseThrow(() -> new EntityNotFoundException("Coach by name: " + teamDTO.getCoachName() + " doesnt exist"));
             team.setCoach(coach);
         }
-         if(!(teamDTO.getLeagueName() == null)){
+         if(teamDTO.getLeagueName() != null){
              league = leagueRepository.findByName(teamDTO.getLeagueName())
                      .orElseThrow(() -> new EntityNotFoundException("League: " + teamDTO.getLeagueName() + " not found"));
 

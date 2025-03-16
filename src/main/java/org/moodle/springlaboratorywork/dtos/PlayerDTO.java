@@ -15,6 +15,8 @@ public class PlayerDTO {
     private String name;
     private String surname;
     private String teamName;
+    private Integer goals;
+    private Integer assists;
 
     public static PlayerDTO mapToDTO(Player player){
         return PlayerDTO.builder()
@@ -23,6 +25,8 @@ public class PlayerDTO {
                 .teamName(player
                         .getTeam()
                         .getName())
+                .goals(player.getPlayerStatistic().getGoals())
+                .assists(player.getPlayerStatistic().getAssists())
                 .build();
     }
 }

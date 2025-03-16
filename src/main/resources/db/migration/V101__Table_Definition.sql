@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS players
     id SERIAL PRIMARY KEY,
     name VARCHAR(225) NOT NULL,
     surname VARCHAR(225) NOT NULL,
+    goals INT DEFAULT 0,
+    assists INT DEFAULT 0,
     team_id BIGINT REFERENCES teams(id) ON DELETE SET NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP
