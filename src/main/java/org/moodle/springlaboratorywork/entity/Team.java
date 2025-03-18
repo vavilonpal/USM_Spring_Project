@@ -6,7 +6,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,12 +37,12 @@ public class Team {
     @OneToMany
     @JoinColumn(name = "home_team_id")
     @Builder.Default
-    private List<Match> homeMatches = new ArrayList<>();
+    private Set<Match> homeMatches = new HashSet<>();
 
     @OneToMany
     @JoinColumn(name = "away_team_id")
     @Builder.Default
-    private List<Match> awayMatches = new ArrayList<>();
+    private Set<Match> awayMatches = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "league_id")

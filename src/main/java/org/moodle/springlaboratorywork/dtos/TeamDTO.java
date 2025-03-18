@@ -29,8 +29,8 @@ public class TeamDTO {
         return TeamDTO
                 .builder()
                 .name(team.getName())
-                .coachName(team.getCoach() != null ? team.getCoach().getName() : " " )
-                .leagueName(team.getLeague().getName())
+                .coachName(team.getCoach() != null ? team.getCoach().getName() : null)
+                .leagueName(team.getLeague() != null ? team.getLeague().getName(): null)
                 .playerNames(team.getPlayers()
                         .stream()
                         .map(Player::getName)

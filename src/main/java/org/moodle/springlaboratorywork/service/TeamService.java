@@ -12,6 +12,7 @@ import org.moodle.springlaboratorywork.repository.CoachRepository;
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.PlayerRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.hibernateRepository.TeamDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +22,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TeamService {
-    private final TeamRepository teamRepository;
+    //private final TeamRepository teamRepository;
     private final CoachRepository coachRepository;
     private final LeagueRepository leagueRepository;
+    private final TeamDao teamRepository;
 
     public List<Team> getAllTeams() {
         return teamRepository.findAll();

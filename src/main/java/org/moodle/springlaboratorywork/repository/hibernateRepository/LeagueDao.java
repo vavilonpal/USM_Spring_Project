@@ -44,18 +44,12 @@ public class LeagueDao {
 
     public Optional<League> findById(Long id) {
         League league = null;
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
 
             league = session.get(League.class, id);
 
-            transaction.commit();
             return Optional.ofNullable(league);
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw e;
 
         }

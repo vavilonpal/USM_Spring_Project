@@ -12,6 +12,7 @@ import org.moodle.springlaboratorywork.exception.HomeAndAwayTeamAreTheSameExcept
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.MatchRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.hibernateRepository.MatchDao;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MatchService {
-    private final MatchRepository matchRepository;
+    private final MatchRepository matchRepo;
+    private final MatchDao matchRepository;
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
 
@@ -98,7 +100,7 @@ public class MatchService {
         }
     }
     private void checkExistsByHomeTeamNameAndAwayTeamName(String homeTeamName, String awayTeamName){
-        if (matchRepository.existsByHomeTeamNameAndAwayTeamName(homeTeamName, awayTeamName)) {
+        if (matchRepo.existsByHomeTeamNameAndAwayTeamName(homeTeamName, awayTeamName)) {
             throw new EntityExistsException("Match already exists");
         }
     }

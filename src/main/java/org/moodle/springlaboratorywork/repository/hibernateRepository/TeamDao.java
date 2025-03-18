@@ -5,47 +5,52 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.entity.Team;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class TeamDao {
 
 
     public Optional<Team> findById(Long id) {
-        Team team = null;
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+            String hql = """
+                select t from Team  t
+                left join fetch t.coach
+                left join fetch t.league
+                left join fetch t.awayMatches
+                left join fetch t.homeMatches
+                left join fetch t.players
+                where t.id = :id
+                """;
+            Query query = session.createQuery(hql, Team.class);
+            query.setParameter("id", id);
+            Team team = (Team) query.getSingleResult();
 
-            team = session.get(Team.class, id);
-
-            transaction.commit();
             return Optional.ofNullable(team);
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw e;
 
         }
     }
     //todo realazie fetching
     public List<Team> findAll() {
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            //String hql = "select t from Team t join fetch l.teams";
+            String hql = """
+                select t from Team  t
+                left join fetch t.coach
+                left join fetch t.league
+                left join fetch t.awayMatches
+                left join fetch t.homeMatches
+                left join fetch t.players
+                """;
             Query query = session.createQuery(hql, Team.class);
 
             List<Team> teams = query.getResultList();
-
-            transaction.commit();
             return teams;
         }catch (Exception e){
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw e;
         }
     }
