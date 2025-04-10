@@ -62,6 +62,7 @@ public class TeamService {
 
              team.setLeague(league);
          }
+         team.setName(teamDTO.getName());
 
 
         return teamRepository.save(team);

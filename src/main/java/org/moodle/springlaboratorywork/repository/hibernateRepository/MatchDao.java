@@ -21,13 +21,8 @@ public class MatchDao {
                     left join fetch m.homeTeam 
                     left join fetch m.awayTeam
                     """;
-            Query query = session.createQuery(hql, Match.class);
-
-            List<Match> matches = query.getResultList();
-
-            return matches;
-        }catch (Exception e){
-            throw e;
+            Query<Match> query = session.createQuery(hql, Match.class);
+            return query.getResultList();
         }
     }
 
@@ -41,34 +36,14 @@ public class MatchDao {
                     left join fetch m.awayTeam
                     where m.id = :id
                     """;
-            Query query = session.createQuery(hql, Match.class);
+            Query<Match> query = session.createQuery(hql, Match.class);
             query.setParameter("id", id);
             Match match = (Match) query.getSingleResult();
             return Optional.ofNullable(match);
-        } catch (Exception e) {
-            throw e;
-
         }
     }
 
     public Match save(Match match) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            session.persist(match);
-
-            transaction.commit();
-            return match;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw e;
-        }
-    }
-
-    public Match update(Match match) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -84,6 +59,7 @@ public class MatchDao {
             throw e;
         }
     }
+
 
     public void delete(Match match){
         Transaction transaction = null;

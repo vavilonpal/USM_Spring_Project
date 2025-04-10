@@ -60,7 +60,7 @@ public class LeagueService {
             league.setTeams(leagueTeams);
         }
 
-        return leagueDao.update(league);
+        return leagueDao.save(league);
     }
 
     public void deleteLeague(Long id) {

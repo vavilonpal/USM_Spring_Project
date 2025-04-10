@@ -4,8 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.entity.Team;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +25,13 @@ public class TeamDao {
                 left join fetch t.players
                 where t.id = :id
                 """;
-            Query query = session.createQuery(hql, Team.class);
+            Query<Team> query = session.createQuery(hql, Team.class);
             query.setParameter("id", id);
-            Team team = (Team) query.getSingleResult();
+            Team team = query.getSingleResult();
 
             return Optional.ofNullable(team);
-        } catch (Exception e) {
-            throw e;
-
         }
     }
-    //todo realazie fetching
     public List<Team> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
@@ -46,39 +42,15 @@ public class TeamDao {
                 left join fetch t.homeMatches
                 left join fetch t.players
                 """;
-            Query query = session.createQuery(hql, Team.class);
-
-            List<Team> teams = query.getResultList();
-            return teams;
-        }catch (Exception e){
-            throw e;
+            Query<Team> query = session.createQuery(hql, Team.class);
+            return query.getResultList();
         }
     }
-
     public Team save(Team team) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
-            session.persist(team);
-
-            transaction.commit();
-            return team;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw e;
-        }
-    }
-
-    public Team update(Team team) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
             session.merge(team);
-
             transaction.commit();
             return team;
         } catch (Exception e) {
@@ -88,6 +60,8 @@ public class TeamDao {
             throw e;
         }
     }
+
+
 
     public void delete(Team team){
         Transaction transaction = null;
