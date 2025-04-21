@@ -6,6 +6,7 @@ import org.moodle.springlaboratorywork.dtos.TeamDTO;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.service.TeamService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamDTO teamDTO) {
+    public ResponseEntity<TeamDTO> createTeam(@RequestBody @Validated TeamDTO teamDTO) {
         Team team = teamService.createTeam(teamDTO);
 
         return ResponseEntity.ok(teamDTO);
@@ -43,7 +44,7 @@ public class TeamController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TeamDTO> updateTeam(@PathVariable Long id,
-                                              @RequestBody TeamDTO teamDTO) {
+                                              @RequestBody @Validated TeamDTO teamDTO) {
         Team team = teamService.updateTeam(id, teamDTO);
 
         return ResponseEntity.ok(teamDTO);

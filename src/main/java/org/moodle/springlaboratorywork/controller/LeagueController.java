@@ -6,6 +6,7 @@ import org.moodle.springlaboratorywork.dtos.LeagueDTO;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.service.LeagueService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class LeagueController {
         return ResponseEntity.ok(league);
     }
     @PostMapping
-    public ResponseEntity<LeagueDTO> createLeague(@RequestBody LeagueDTO  leagueRequest){
+    public ResponseEntity<LeagueDTO> createLeague(@RequestBody @Validated LeagueDTO  leagueRequest){
         League league = leagueService.createLeague(leagueRequest);
 
         return ResponseEntity.ok(leagueRequest);
@@ -40,7 +41,7 @@ public class LeagueController {
 
     @PutMapping("/{id}")
     public ResponseEntity<LeagueDTO> updateLeague(@PathVariable Long id,
-                                                  @RequestBody LeagueDTO leagueRequest){
+                                                  @RequestBody @Validated LeagueDTO leagueRequest){
         League league = leagueService.updateLeague(id, leagueRequest);
 
         return ResponseEntity.ok(leagueRequest);

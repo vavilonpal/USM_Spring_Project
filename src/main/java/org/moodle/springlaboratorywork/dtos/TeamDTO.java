@@ -1,6 +1,7 @@
 package org.moodle.springlaboratorywork.dtos;
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TeamDTO {
+    @NotBlank(message = "Name is empty")
     private String name;
+    @NotBlank(message = "Name is empty")
     private String coachName;
+    @NotBlank(message = "Name is empty")
     private String leagueName;
     @Builder.Default
     private List<String> playerNames = new ArrayList<>();

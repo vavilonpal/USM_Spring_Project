@@ -6,6 +6,7 @@ import org.moodle.springlaboratorywork.dtos.MatchDTO;
 import org.moodle.springlaboratorywork.entity.Match;
 import org.moodle.springlaboratorywork.service.MatchService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class MatchController {
     }
 
     @PostMapping
-    public ResponseEntity<MatchDTO> createMatch(@RequestBody MatchDTO matchRequest) {
+    public ResponseEntity<MatchDTO> createMatch(@RequestBody @Validated MatchDTO matchRequest) {
 
         Match match = matchService.createMatch(matchRequest);
 
@@ -42,7 +43,7 @@ public class MatchController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long id,
-                                                @RequestBody MatchDTO matchRequest) {
+                                                @RequestBody @Validated MatchDTO matchRequest) {
         Match match = matchService.updateMatch(id, matchRequest);
 
         return ResponseEntity.ok(matchRequest);
