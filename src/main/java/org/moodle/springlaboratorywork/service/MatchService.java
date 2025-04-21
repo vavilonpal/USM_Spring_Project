@@ -13,26 +13,36 @@ import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.MatchRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
 import org.moodle.springlaboratorywork.repository.hibernateRepository.MatchDao;
+import org.moodle.springlaboratorywork.repository.jdbcRepository.MatchJDBCRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class MatchService {
     private final MatchRepository matchRepo;
-    private final MatchDao matchRepository;
+    private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
+    private final MatchJDBCRepository matchJDBCRepository;
 
 
     public List<Match> getAllMatches() {
-        return matchRepository.findAll();
+        return matchJDBCRepository.findAll();
+    }
+    public Set<Match> getHomeMatchesByTeamId(Long teamId){
+        return matchRepository.findAllByHomeTeamId(teamId);
+    }
+    public Set<Match> getAwayMatchesByTeamId(Long teamId){
+        return matchRepository.findAllByAwayTeamId(teamId);
     }
 
     public Match getMatchById(Long id) {
-        return matchRepository.findById(id)
+        return matchJDBCRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Match by id: " + id + "not found"));
     }
 
@@ -56,7 +66,7 @@ public class MatchService {
                 .awayTeam(awayTeam)
                 .build();
 
-        return matchRepository.save(match);
+        return matchJDBCRepository.save(match);
     }
 
     public Match updateMatch(Long id, MatchDTO matchDto) {
@@ -78,20 +88,17 @@ public class MatchService {
             match.setAwayTeam(awayTeam);
         }
 
-
-        //todo Do ask teams must be from the same league?
         League league = leagueRepository.findByName(matchDto.getLeagueName())
                 .orElseThrow(() -> new EntityNotFoundException("League not exists"));
 
         match.setLeague(league);
         match.setMatchDateTime(match.getMatchDateTime());
 
-        return matchRepository.save(match);
+        return matchJDBCRepository.save(match);
     }
 
     public void deleteMatch(Long id) {
-        Match match = getMatchById(id);
-        matchRepository.delete(match);
+        matchJDBCRepository.delete(id);
     }
 
     private void checkTheSameOfTeamNames(String homeTeamName, String awayTeamName){

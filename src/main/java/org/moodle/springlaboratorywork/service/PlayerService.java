@@ -23,6 +23,10 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
+
+    public List<Player> getPlayersByTeamId(Long teamId){
+        return  playerRepository.findAllPlayersByTeamId(teamId);
+    }
     public Player getPlayerById(Long id) {
         return playerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Player by id: " + id + " not found"));

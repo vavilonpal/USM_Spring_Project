@@ -10,6 +10,7 @@ import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
 import org.moodle.springlaboratorywork.repository.hibernateRepository.LeagueDao;
+import org.moodle.springlaboratorywork.repository.jdbcRepository.LeagueJDBCRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,14 +23,15 @@ import java.util.stream.Collectors;
 public class LeagueService {
     private final LeagueRepository leagueRepository;
     private final TeamRepository teamRepository;
+    private final LeagueJDBCRepository leagueJDBCRepository;
     private final LeagueDao leagueDao;
 
     public List<League> getAllLeagues() {
-        return leagueDao.findAll();
+        return leagueJDBCRepository.findAll();
     }
 
     public League getLeagueById(Long id) {
-        return leagueDao.findById(id)
+        return leagueJDBCRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("League by id:" + id + " not found"));
     }
 
@@ -40,7 +42,7 @@ public class LeagueService {
         League league = League.builder()
                 .name(leagueDTO.getName())
                 .build();
-        return leagueDao.save(league);
+        return leagueJDBCRepository.save(league);
     }
 
     public League updateLeague(Long id, LeagueDTO leagueDTO) {
@@ -60,11 +62,11 @@ public class LeagueService {
             league.setTeams(leagueTeams);
         }
 
-        return leagueDao.save(league);
+        return leagueJDBCRepository.save(league);
     }
 
     public void deleteLeague(Long id) {
-        League league = getLeagueById(id);
-        leagueDao.delete(league);
+        //League league = getLeagueById(id);
+        leagueJDBCRepository.delete(id);
     }
 }

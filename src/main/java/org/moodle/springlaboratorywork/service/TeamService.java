@@ -13,6 +13,7 @@ import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.PlayerRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
 import org.moodle.springlaboratorywork.repository.hibernateRepository.TeamDao;
+import org.moodle.springlaboratorywork.repository.jdbcRepository.TeamJDBCRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +23,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TeamService {
-    //private final TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
     private final CoachRepository coachRepository;
     private final LeagueRepository leagueRepository;
-    private final TeamDao teamRepository;
+    private final TeamJDBCRepository teamJDBCRepository;
 
     public List<Team> getAllTeams() {
-        return teamRepository.findAll();
+        return teamJDBCRepository.findAll();
     }
 
     public Team getTeamById(Long id) {
-        return teamRepository.findById(id)
+        return teamJDBCRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Team by id: " + id + " not found"));
     }
 
@@ -44,7 +45,7 @@ public class TeamService {
         Team team = Team.builder()
                 .name(teamDTO.getName())
                 .build();
-        return teamRepository.save(team);
+        return teamJDBCRepository.save(team);
     }
 
     public Team updateTeam(Long id, TeamDTO teamDTO) {
@@ -62,14 +63,15 @@ public class TeamService {
 
              team.setLeague(league);
          }
+
          team.setName(teamDTO.getName());
 
 
-        return teamRepository.save(team);
+        return teamJDBCRepository.save(team);
     }
 
     public void deleteTeamById(Long id) {
-        Team team = getTeamById(id);
-        teamRepository.delete(team);
+        //Team team = getTeamById(id);
+        teamJDBCRepository.delete(id);
     }
 }
