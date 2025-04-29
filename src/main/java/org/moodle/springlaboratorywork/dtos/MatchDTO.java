@@ -1,6 +1,7 @@
 package org.moodle.springlaboratorywork.dtos;
 
 
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,22 +16,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class MatchDTO {
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "League name is empty")
     private String leagueName;
 
-    @NotBlank(message = "Name is empty")
+    @FutureOrPresent(message = "The match should not start in the past")
     private LocalDateTime matchDateTime;
 
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "Home team name is empty")
     private String homeTeamName;
 
-    @NotBlank(message = "Name is empty")
-    private String homeTeamCoachName;
-
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "away team name is empty")
     private String awayTeamName;
-    @NotBlank(message = "Name is empty")
-    private String awayTeamCoachName;
+
 
     public static MatchDTO mapToDTO(Match match) {
         return MatchDTO.builder()
@@ -39,16 +36,8 @@ public class MatchDTO {
                 .homeTeamName(match
                         .getHomeTeam()
                         .getName())
-                .homeTeamCoachName(match
-                        .getHomeTeam()
-                        .getCoach()
-                        .getName())
                 .awayTeamName(match
                         .getAwayTeam()
-                        .getName())
-                .awayTeamCoachName(match
-                        .getAwayTeam()
-                        .getCoach()
                         .getName())
                 .build();
     }

@@ -109,7 +109,9 @@ public class MatchJDBCRepository {
 
         Team homeTeam = teamService.getTeamById(rs.getLong("home_team_id"));
         Team awayTeam = teamService.getTeamById(rs.getLong("away_team_id"));
-        League league = leagueService.findById(rs.getLong("league_id")).orElseThrow(()-> new RuntimeException("laegue not found"));
+        League league = leagueService.findById(rs.getLong("league_id"))
+                .orElseThrow(()-> new RuntimeException("laegue not found"));
+
         return Match.builder()
                 .id(rs.getLong("id"))
                 .league(league)

@@ -2,6 +2,7 @@ package org.moodle.springlaboratorywork.dtos;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class LeagueDTO {
-    @NotBlank(message = "Name is empty")
+    @NotBlank(message = "League name is empty")
+    @Size(max = 120, message = "League name too long")
     private String name;
     private List<String> teamNames = new ArrayList<>();
 
