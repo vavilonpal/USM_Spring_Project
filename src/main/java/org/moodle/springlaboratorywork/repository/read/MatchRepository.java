@@ -4,10 +4,12 @@ package org.moodle.springlaboratorywork.repository.read;
 import org.moodle.springlaboratorywork.entity.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
 @Repository
+@Transactional(readOnly = true)
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
    /* @Query("SELECT COUNT(m) FROM Match m " +
