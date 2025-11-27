@@ -1,18 +1,16 @@
 package org.moodle.springlaboratorywork.service;
 
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.CoachDTO;
 import org.moodle.springlaboratorywork.entity.Coach;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.CoachRepository;
-import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.write.CoachRepository;
+import org.moodle.springlaboratorywork.repository.write.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

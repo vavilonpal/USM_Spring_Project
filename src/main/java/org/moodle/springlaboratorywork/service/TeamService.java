@@ -8,9 +8,9 @@ import org.moodle.springlaboratorywork.dtos.TeamDTO;
 import org.moodle.springlaboratorywork.entity.Coach;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.CoachRepository;
-import org.moodle.springlaboratorywork.repository.LeagueRepository;
-import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.write.CoachRepository;
+import org.moodle.springlaboratorywork.repository.write.LeagueRepository;
+import org.moodle.springlaboratorywork.repository.write.TeamRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

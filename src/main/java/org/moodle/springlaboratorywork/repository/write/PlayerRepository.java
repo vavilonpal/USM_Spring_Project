@@ -1,4 +1,4 @@
-package org.moodle.springlaboratorywork.repository;
+package org.moodle.springlaboratorywork.repository.write;
 
 
 import org.moodle.springlaboratorywork.entity.Coach;

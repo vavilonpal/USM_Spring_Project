@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.LeagueDTO;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.LeagueRepository;
-import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.write.LeagueRepository;
+import org.moodle.springlaboratorywork.repository.write.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

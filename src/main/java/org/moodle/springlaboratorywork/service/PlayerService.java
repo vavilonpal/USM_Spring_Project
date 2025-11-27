@@ -7,8 +7,8 @@ import org.moodle.springlaboratorywork.dtos.PlayerDTO;
 import org.moodle.springlaboratorywork.entity.Player;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.entity.embedded.PlayerStatistic;
-import org.moodle.springlaboratorywork.repository.PlayerRepository;
-import org.moodle.springlaboratorywork.repository.TeamRepository;
+import org.moodle.springlaboratorywork.repository.write.PlayerRepository;
+import org.moodle.springlaboratorywork.repository.write.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
