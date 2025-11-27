@@ -12,12 +12,8 @@ import org.moodle.springlaboratorywork.exception.HomeAndAwayTeamAreTheSameExcept
 import org.moodle.springlaboratorywork.repository.LeagueRepository;
 import org.moodle.springlaboratorywork.repository.MatchRepository;
 import org.moodle.springlaboratorywork.repository.TeamRepository;
-import org.moodle.springlaboratorywork.repository.hibernateRepository.MatchDao;
-import org.moodle.springlaboratorywork.repository.jdbcRepository.MatchJDBCRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -28,11 +24,9 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
     private final LeagueRepository leagueRepository;
-    private final MatchJDBCRepository matchJDBCRepository;
-
 
     public List<Match> getAllMatches() {
-        return matchJDBCRepository.findAll();
+        return matchRepository.findAll();
     }
     public Set<Match> getHomeMatchesByTeamId(Long teamId){
         return matchRepository.findAllByHomeTeamId(teamId);
@@ -42,7 +36,7 @@ public class MatchService {
     }
 
     public Match getMatchById(Long id) {
-        return matchJDBCRepository.findById(id)
+        return matchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Match by id: " + id + "not found"));
     }
 
@@ -66,7 +60,7 @@ public class MatchService {
                 .awayTeam(awayTeam)
                 .build();
 
-        return matchJDBCRepository.save(match);
+        return matchRepository.save(match);
     }
 
     public Match updateMatch(Long id, MatchDTO matchDto) {
@@ -94,11 +88,11 @@ public class MatchService {
         match.setLeague(league);
         match.setMatchDateTime(match.getMatchDateTime());
 
-        return matchJDBCRepository.save(match);
+        return matchRepository.save(match);
     }
 
     public void deleteMatch(Long id) {
-        matchJDBCRepository.delete(id);
+        matchRepository.deleteById(id);
     }
 
     private void checkTheSameOfTeamNames(String homeTeamName, String awayTeamName){
