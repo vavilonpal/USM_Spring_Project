@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.CoachDTO;
 import org.moodle.springlaboratorywork.entity.Coach;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.write.CoachRepository;
-import org.moodle.springlaboratorywork.repository.write.TeamRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteCoachRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +16,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CoachService {
-    private final CoachRepository coachRepository;
-    private final TeamRepository teamRepository;
+    private final WriteCoachRepository writeCoachRepository;
+    private final ReadTeamRepository teamRepository;
 
     public List<Coach> getAllCoaches() {
-        return coachRepository.findAll();
+        return writeCoachRepository.findAll();
     }
 
     public Coach getCoachById(Long id) {
-        return coachRepository.findById(id)
+        return writeCoachRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Coach by id: " + id + " not found"));
     }
 
@@ -35,7 +36,7 @@ public class CoachService {
 
                 .build();
 
-        return coachRepository.save(coach);
+        return writeCoachRepository.save(coach);
     }
 
     public Coach updateCoach(Long id, CoachDTO coachDTO) {
@@ -51,11 +52,11 @@ public class CoachService {
             coach.setTeam(team);
         }
 
-        return coachRepository.save(coach);
+        return writeCoachRepository.save(coach);
     }
 
     public void deleteCoach(Long id) {
         Coach coach = getCoachById(id);
-        coachRepository.delete(coach);
+        writeCoachRepository.delete(coach);
     }
 }

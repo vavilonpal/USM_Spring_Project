@@ -7,8 +7,9 @@ import org.moodle.springlaboratorywork.dtos.PlayerDTO;
 import org.moodle.springlaboratorywork.entity.Player;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.entity.embedded.PlayerStatistic;
-import org.moodle.springlaboratorywork.repository.write.PlayerRepository;
-import org.moodle.springlaboratorywork.repository.write.TeamRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
+import org.moodle.springlaboratorywork.repository.write.WritePlayerRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,19 +17,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
-    private final PlayerRepository playerRepository;
-    private final TeamRepository teamRepository;
+    private final WritePlayerRepository writePlayerRepository;
+    private final ReadTeamRepository teamRepository;
 
     public List<Player> getAllPlayers() {
-        return playerRepository.findAll();
+        return writePlayerRepository.findAll();
     }
 
 
     public List<Player> getPlayersByTeamId(Long teamId){
-        return  playerRepository.findAllPlayersByTeamId(teamId);
+        return  writePlayerRepository.findAllPlayersByTeamId(teamId);
     }
     public Player getPlayerById(Long id) {
-        return playerRepository.findById(id)
+        return writePlayerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Player by id: " + id + " not found"));
     }
 
@@ -37,7 +38,7 @@ public class PlayerService {
                 .name(playerDTO.getName())
                 .surname(playerDTO.getSurname())
                 .build();
-        return playerRepository.save(player);
+        return writePlayerRepository.save(player);
     }
 
     public Player updatePlayer(Long id, PlayerDTO playerDTO) {
@@ -56,11 +57,11 @@ public class PlayerService {
         player.setPlayerStatistic(playerStatistic);
 
 
-        return playerRepository.save(player);
+        return writePlayerRepository.save(player);
     }
 
     public void deletePlayer(Long id) {
         Player player = getPlayerById(id);
-        playerRepository.delete(player);
+        writePlayerRepository.delete(player);
     }
 }

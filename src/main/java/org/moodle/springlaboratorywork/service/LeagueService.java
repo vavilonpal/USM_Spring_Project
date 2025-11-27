@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.LeagueDTO;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.write.LeagueRepository;
-import org.moodle.springlaboratorywork.repository.write.TeamRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +19,15 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class LeagueService {
-    private final LeagueRepository leagueRepository;
-    private final TeamRepository teamRepository;
+    private final WriteLeagueRepository writeLeagueRepository;
+    private final ReadTeamRepository teamRepository;
 
     public List<League> getAllLeagues() {
-        return leagueRepository.findAll();
+        return writeLeagueRepository.findAll();
     }
 
     public League getLeagueById(Long id) {
-        return leagueRepository.findById(id)
+        return writeLeagueRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("League by id:" + id + " not found"));
     }
 
@@ -34,7 +35,7 @@ public class LeagueService {
         League league = League.builder()
                 .name(leagueDTO.getName())
                 .build();
-        return leagueRepository.save(league);
+        return writeLeagueRepository.save(league);
     }
 
     public League updateLeague(Long id, LeagueDTO leagueDTO) {
@@ -54,11 +55,11 @@ public class LeagueService {
             league.setTeams(leagueTeams);
         }
 
-        return leagueRepository.save(league);
+        return writeLeagueRepository.save(league);
     }
 
     public void deleteLeague(Long id) {
         //League league = getLeagueById(id);
-        leagueRepository.deleteById(id);
+        writeLeagueRepository.deleteById(id);
     }
 }

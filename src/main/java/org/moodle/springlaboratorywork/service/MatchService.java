@@ -9,9 +9,11 @@ import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Match;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.exception.HomeAndAwayTeamAreTheSameException;
-import org.moodle.springlaboratorywork.repository.write.LeagueRepository;
-import org.moodle.springlaboratorywork.repository.write.MatchRepository;
-import org.moodle.springlaboratorywork.repository.write.TeamRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadLeagueRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteMatchRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,23 +22,22 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class MatchService {
-    private final MatchRepository matchRepo;
-    private final MatchRepository matchRepository;
-    private final TeamRepository teamRepository;
-    private final LeagueRepository leagueRepository;
+    private final WriteMatchRepository writeMatchRepository;
+    private final ReadTeamRepository teamRepository;
+    private final ReadLeagueRepository leagueRepository;
 
     public List<Match> getAllMatches() {
-        return matchRepository.findAll();
+        return writeMatchRepository.findAll();
     }
     public Set<Match> getHomeMatchesByTeamId(Long teamId){
-        return matchRepository.findAllByHomeTeamId(teamId);
+        return writeMatchRepository.findAllByHomeTeamId(teamId);
     }
     public Set<Match> getAwayMatchesByTeamId(Long teamId){
-        return matchRepository.findAllByAwayTeamId(teamId);
+        return writeMatchRepository.findAllByAwayTeamId(teamId);
     }
 
     public Match getMatchById(Long id) {
-        return matchRepository.findById(id)
+        return writeMatchRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Match by id: " + id + "not found"));
     }
 
@@ -60,7 +61,7 @@ public class MatchService {
                 .awayTeam(awayTeam)
                 .build();
 
-        return matchRepository.save(match);
+        return writeMatchRepository.save(match);
     }
 
     public Match updateMatch(Long id, MatchDTO matchDto) {
@@ -88,11 +89,11 @@ public class MatchService {
         match.setLeague(league);
         match.setMatchDateTime(match.getMatchDateTime());
 
-        return matchRepository.save(match);
+        return writeMatchRepository.save(match);
     }
 
     public void deleteMatch(Long id) {
-        matchRepository.deleteById(id);
+        writeMatchRepository.deleteById(id);
     }
 
     private void checkTheSameOfTeamNames(String homeTeamName, String awayTeamName){
@@ -101,7 +102,7 @@ public class MatchService {
         }
     }
     private void checkExistsByHomeTeamNameAndAwayTeamName(String homeTeamName, String awayTeamName){
-        if (matchRepo.existsByHomeTeamNameAndAwayTeamName(homeTeamName, awayTeamName)) {
+        if (writeMatchRepository.existsByHomeTeamNameAndAwayTeamName(homeTeamName, awayTeamName)) {
             throw new EntityExistsException("Match already exists");
         }
     }

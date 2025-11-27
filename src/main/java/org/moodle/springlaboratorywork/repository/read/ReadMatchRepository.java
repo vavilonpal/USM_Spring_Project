@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)
-public interface MatchRepository extends JpaRepository<Match, Long> {
+public interface ReadMatchRepository extends JpaRepository<Match, Long> {
 
    /* @Query("SELECT COUNT(m) FROM Match m " +
             "WHERE m.homeTeam.name = :homeTeamName " +

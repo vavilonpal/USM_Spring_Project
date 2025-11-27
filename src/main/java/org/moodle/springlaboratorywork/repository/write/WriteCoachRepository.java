@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CoachRepository extends JpaRepository<Coach, Long> {
+public interface WriteCoachRepository extends JpaRepository<Coach, Long> {
     Optional<Coach> findByName(String name);
 
     Boolean existsByNameAndTeamName(String coachName, String teamName);
