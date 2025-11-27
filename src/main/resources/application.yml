@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: aws
   application:
     name: spring-laboratory-work
   # DB properties
