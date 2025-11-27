@@ -6,12 +6,12 @@ spring:
     read:
       username: user
       password: user
-      url: jdbc:postgresql://localhost:5432/postgres
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
       driver-class-name: org.postgresql.Driver
     write:
       username: user1
       password: user1
-      url: jdbc:postgresql://localhost:5434/postgres
+      jdbc-url: jdbc:postgresql://localhost:5434/postgres
       driver-class-name: org.postgresql.Driver
   #JPA properties
 #  jpa:
@@ -21,8 +21,18 @@ spring:
 
   #FlyWay properties
   flyway:
-    enabled: true
-    baseline-on-migrate: true
+    enabled: false
+  custom-flyway:
+    read:
+      username: user
+      password: user
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      driver-class-name: org.postgresql.Driver
+    write:
+      username: user1
+      password: user1
+      jdbc-url: jdbc:postgresql://localhost:5434/postgres
+      driver-class-name: org.postgresql.Driver
 
 # Logging level
 logging:
