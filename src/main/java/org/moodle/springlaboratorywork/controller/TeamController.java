@@ -29,7 +29,7 @@ public class TeamController {
     @GetMapping("/{id}")
     public ResponseEntity<TeamDTO> getTeam(@PathVariable Long id) {
 
-        TeamDTO teamDTO = TeamDTO.mapToDTO(teamService.getTeamById(id));
+        TeamDTO teamDTO = teamService.getTeamDtoById(id);
 
         return ResponseEntity.ok(teamDTO);
     }

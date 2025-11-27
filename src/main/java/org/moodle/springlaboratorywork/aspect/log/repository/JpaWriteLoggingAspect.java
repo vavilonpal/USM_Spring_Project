@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class JpaWriteLoggingAspect {
-    @Before("execution(* org.moodle.springlaboratorywork..write.repository..*.save*(..)) || " +
-            "execution(* org.moodle.springlaboratorywork..write.repository..*.delete*(..)) || " +
-            "execution(* org.moodle.springlaboratorywork..write.repository..*.update*(..))")
+    @Before("execution(* org.moodle.springlaboratorywork.repository.write..*.save*(..)) || " +
+            "execution(* org.moodle.springlaboratorywork.repository.write..*.delete*(..)) || " +
+            "execution(* org.moodle.springlaboratorywork.repository.write..*.update*(..))")
     public void logRead(JoinPoint joinPoint) {
         log.info("[JPA WRITE] {}", joinPoint.getSignature());
     }

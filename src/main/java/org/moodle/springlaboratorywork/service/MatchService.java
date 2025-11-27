@@ -10,6 +10,7 @@ import org.moodle.springlaboratorywork.entity.Match;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.exception.HomeAndAwayTeamAreTheSameException;
 import org.moodle.springlaboratorywork.repository.read.ReadLeagueRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadMatchRepository;
 import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteMatchRepository;
@@ -23,11 +24,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class MatchService {
     private final WriteMatchRepository writeMatchRepository;
+    private final ReadMatchRepository readMatchRepository;
     private final ReadTeamRepository teamRepository;
     private final ReadLeagueRepository leagueRepository;
 
     public List<Match> getAllMatches() {
-        return writeMatchRepository.findAll();
+        return readMatchRepository.findAll();
     }
     public Set<Match> getHomeMatchesByTeamId(Long teamId){
         return writeMatchRepository.findAllByHomeTeamId(teamId);

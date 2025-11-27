@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class JpaReadLoggingAspect {
-    @Before("execution(* org.moodle.springlaboratorywork..read.repository..*.find*(..)) || " +
-            "execution(* org.moodle.springlaboratorywork..read.repository..*.get*(..)) || " +
-            "execution(* org.moodle.springlaboratorywork..read.repository..*.query*(..))")
+    @Before("execution(* org.moodle.springlaboratorywork.repository.read..*.find*(..)) || " +
+            "execution(* org.moodle.springlaboratorywork.repository.read..*.get*(..)) || " +
+            "execution(* org.moodle.springlaboratorywork.repository.read..*.query*(..))")
     public void logRead(JoinPoint joinPoint) {
         log.info("[JPA READ] {}", joinPoint.getSignature());
     }

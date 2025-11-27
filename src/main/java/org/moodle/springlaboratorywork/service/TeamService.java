@@ -10,8 +10,7 @@ import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.repository.read.ReadCoachRepository;
 import org.moodle.springlaboratorywork.repository.read.ReadLeagueRepository;
-import org.moodle.springlaboratorywork.repository.write.WriteCoachRepository;
-import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
+import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,15 +19,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamService {
     private final WriteTeamRepository writeTeamRepository;
+    private final ReadTeamRepository readTeamRepository;
     private final ReadCoachRepository coachRepository;
     private final ReadLeagueRepository leagueRepository;
 
     public List<Team> getAllTeams() {
-        return writeTeamRepository.findAll();
+        return readTeamRepository.findAll();
     }
 
+    public TeamDTO getTeamDtoById(Long id) {
+        Team team = readTeamRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Team by id: " + id + " not found"));
+        return TeamDTO.mapToDTO(team);
+    }
     public Team getTeamById(Long id) {
-        return writeTeamRepository.findById(id)
+        return readTeamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Team by id: " + id + " not found"));
     }
 
