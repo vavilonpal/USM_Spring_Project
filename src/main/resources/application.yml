@@ -5,17 +5,11 @@ spring:
     name: spring-laboratory-work
   # DB properties
   datasource:
-    read:
-      username: user
-      password: user
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      driver-class-name: org.postgresql.Driver
-    write:
-      username: user1
-      password: user1
-      jdbc-url: jdbc:postgresql://localhost:5434/postgres
-      driver-class-name: org.postgresql.Driver
-  #JPA properties
+    username: user
+    password: user
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+
 #  jpa:
 #    hibernate:
 #      ddl-auto: none
@@ -24,17 +18,7 @@ spring:
   #FlyWay properties
   flyway:
     enabled: false
-  custom-flyway:
-    read:
-      username: user
-      password: user
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
-      driver-class-name: org.postgresql.Driver
-    write:
-      username: user1
-      password: user1
-      jdbc-url: jdbc:postgresql://localhost:5434/postgres
-      driver-class-name: org.postgresql.Driver
+    baseline-on-migrate: true
 
 # Logging level
 logging:

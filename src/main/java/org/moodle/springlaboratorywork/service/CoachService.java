@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.CoachDTO;
 import org.moodle.springlaboratorywork.entity.Coach;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteCoachRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoachService {
     private final WriteCoachRepository writeCoachRepository;
-    private final ReadTeamRepository teamRepository;
+    private final WriteTeamRepository teamRepository;
 
     public List<Coach> getAllCoaches() {
         return writeCoachRepository.findAll();

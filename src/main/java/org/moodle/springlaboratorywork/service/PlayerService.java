@@ -7,7 +7,6 @@ import org.moodle.springlaboratorywork.dtos.PlayerDTO;
 import org.moodle.springlaboratorywork.entity.Player;
 import org.moodle.springlaboratorywork.entity.Team;
 import org.moodle.springlaboratorywork.entity.embedded.PlayerStatistic;
-import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
 import org.moodle.springlaboratorywork.repository.write.WritePlayerRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlayerService {
     private final WritePlayerRepository writePlayerRepository;
-    private final ReadTeamRepository teamRepository;
+    private final WriteTeamRepository teamRepository;
 
     public List<Player> getAllPlayers() {
         return writePlayerRepository.findAll();

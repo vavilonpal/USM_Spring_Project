@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.moodle.springlaboratorywork.dtos.LeagueDTO;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LeagueService {
     private final WriteLeagueRepository writeLeagueRepository;
-    private final ReadTeamRepository teamRepository;
+    private final WriteTeamRepository teamRepository;
 
     public List<League> getAllLeagues() {
         return writeLeagueRepository.findAll();

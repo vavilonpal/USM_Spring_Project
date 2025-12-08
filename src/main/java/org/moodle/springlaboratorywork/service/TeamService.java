@@ -8,9 +8,8 @@ import org.moodle.springlaboratorywork.dtos.TeamDTO;
 import org.moodle.springlaboratorywork.entity.Coach;
 import org.moodle.springlaboratorywork.entity.League;
 import org.moodle.springlaboratorywork.entity.Team;
-import org.moodle.springlaboratorywork.repository.read.ReadCoachRepository;
-import org.moodle.springlaboratorywork.repository.read.ReadLeagueRepository;
-import org.moodle.springlaboratorywork.repository.read.ReadTeamRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteCoachRepository;
+import org.moodle.springlaboratorywork.repository.write.WriteLeagueRepository;
 import org.moodle.springlaboratorywork.repository.write.WriteTeamRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamService {
     private final WriteTeamRepository writeTeamRepository;
-    private final ReadTeamRepository readTeamRepository;
-    private final ReadCoachRepository coachRepository;
-    private final ReadLeagueRepository leagueRepository;
+    private final WriteTeamRepository readTeamRepository;
+    private final WriteCoachRepository coachRepository;
+    private final WriteLeagueRepository leagueRepository;
 
     public List<Team> getAllTeams() {
         return readTeamRepository.findAll();
