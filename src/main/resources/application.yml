@@ -25,3 +25,10 @@ logging:
   level:
     org.springframework.data.org.springframework.data.jpa: debug
     org.flywaydb: DEBUG
+
+logs:
+  path:
+    auth: "src/logs/auth.log"
+    requests: "src/logs/requests.log"
+    responses: "src/logs/responses.log"
+    validation: "src/logs/validation.log"

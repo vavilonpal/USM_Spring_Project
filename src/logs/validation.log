@@ -1,0 +1,2 @@
+2025-12-10 00:34:23.683 [http-nio-8080-exec-2] ERROR MethodArgumentNotValidException - Field: name, ErrorMessage:Team name is empty; 
+2025-12-10 00:34:24.614 [http-nio-8080-exec-4] ERROR MethodArgumentNotValidException - Field: name, ErrorMessage:Team name is empty; 
